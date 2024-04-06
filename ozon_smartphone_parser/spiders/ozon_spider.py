@@ -1,4 +1,5 @@
 import logging
+import random
 
 import scrapy
 from scrapy import exceptions
@@ -11,7 +12,7 @@ class OzonSpider(scrapy.Spider):  # парсим версии ОС смартф�
     name = 'ozon'
 
     HOST = 'https://ozon.ru'
-    LIMIT = 3  # кол-во смартфонов
+    LIMIT = 100  # кол-во смартфонов
     PER_PAGE = 36  # кол-во товаров на странице (для подсчета кол-ва страниц)
     SELECTOR_URL = 'ix3'  # селектор для поиска ссылки на товар: <div class="xi3"><a href="/product/apple-smartfon-iphon...></a></div>
 
@@ -36,7 +37,11 @@ class OzonSpider(scrapy.Spider):  # парсим версии ОС смартф�
                 f.write(str(urls) + '\n')
 
             for url in urls:
-                yield SeleniumRequest(url=url, callback=self.os_parse)
+                yield SeleniumRequest(
+                    url=url,
+                    callback=self.os_parse,
+                    script=f"window.scrollBy(0, {random.randint(200, 1000)})"
+                )
 
     def os_parse(self, response, **kwargs):  # парсим версию ОС
         characteristics = response.css('dl ::text').getall()
