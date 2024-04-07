@@ -2,7 +2,7 @@
 - собирает информацию о версиях операционных систем в топ-100 смартфонах (с самым высоким рейтингом пользователей)
 
 ## Особенности
-- работает на scrapy, selenium, pandas
+- работает на python3.11, scrapy, selenium, pandas
 - для обхода антибота — undetected-chromedriver, scrapy-rotating-proxies
 
 ## Запуск
@@ -17,6 +17,7 @@
 - запустить парсер через `main.py`
 
 ## Требования
+- python 3.11
 - Scrapy
 - scrapy-selenium
 - undetected-chromedriver
